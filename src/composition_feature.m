@@ -25,6 +25,7 @@ function [composition_feat] = golden_dist(num_faces, face_mid_points, img_width,
 midx = zeros(1, num_faces);
 midy = zeros(1, num_faces);
 dist = zeros(4, num_faces);
+eps = 1e-9;
 
 for i = 1:num_faces
     midx(1, i) = face_mid_points{1, i}(1);
@@ -38,6 +39,10 @@ for i = 1:num_faces
     dist(4, i) = sqrt(power((midx(1, i)-(2*img_width/3)), 2)/power(img_width, 2) + power((midy(1, i)-(2*img_height/3)), 2)/power(img_height, 2));
 end
 
-composition_feat = min(dist);
+std_dev = std(dist, 0, 1);
+std_dev = std_dev + eps;
+tot_stddev = sum(std_dev);
+
+composition_feat = num_faces/tot_stddev;
 
 end
