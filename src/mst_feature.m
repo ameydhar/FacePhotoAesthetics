@@ -1,4 +1,6 @@
-function [mst_feature] = mst_feature(locations)
+function [mst_feat] = mst_feature(locations)
+% By Amey Dharwadker
+% Last modified: 29 Nov 2013
 
 % Generate adjacency matrix from distance graph
 adj = gen_adj(locations);
@@ -49,9 +51,9 @@ for i = 1:edge_cnt
 end
 
 if(edge_cnt == 0)
-    mst_feature = total;
+    mst_feat = total;
 else
-    mst_feature = total/edge_cnt;
+    mst_feat = total/edge_cnt;
 end
 
 end

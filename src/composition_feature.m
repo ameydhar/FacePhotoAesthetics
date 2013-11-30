@@ -1,4 +1,6 @@
 function [composition_feat] = composition_feature(img, locations)
+% By Amey Dharwadker
+% Last modified: 29 Nov 2013
 
 img_width = size(img, 1);
 img_height = size(img, 2);

@@ -1,5 +1,8 @@
-function [lighting_feat, fg_avg_luminance, bg_luminance] = lighting_feature(hsv_img, locations)
+function [lighting_feat] = lighting_feature(img, locations)
+% By Amey Dharwadker
+% Last modified: 29 Nov 2013
 
+hsv_img = rgb2hsv(img);
 luminance = hsv_img(:, :, 3);
 bg_luminance = sum(sum(luminance))/(size(luminance, 1) * size(luminance, 2));
 
