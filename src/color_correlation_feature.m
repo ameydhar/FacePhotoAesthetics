@@ -5,7 +5,7 @@ function [color_feat] = color_correlation_feature(img, boxes)
 % Find histogram for the foreground region
 num_faces = size(boxes,2);
 
-%%separating the image into three color spaces
+% Separating the image into R,G,B color spaces
 img_Fullred = img(:,:,1);
 img_Fullgreen = img(:,:, 2);
 img_Fullblue = img(:,:, 3);

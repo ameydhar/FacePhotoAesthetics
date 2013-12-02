@@ -1,4 +1,4 @@
-function [cce_classification, predicted_labels_classification, cce_regression, predicted_labels_regression] = predict_scores(feature, libsvm_path)
+function [cce_classification, predicted_labels_classification, cce_regression, predicted_labels_regression, true_labels] = predict_scores(feature, libsvm_path)
 % By Amey Dharwadker, Arihant Kochhar
 % Last modified: 30 Nov 2013
 
@@ -9,7 +9,7 @@ labels = xlsread(filen,'B:B');
 [sorted_labels, ix] = sort(labels(:,1));
 sorted_names = filenames(ix, 1);
 
-num_samples = size(feature,1);
+num_samples = size(feature, 1);
 
 labels = quantize_labels(labels, num_samples);
 
@@ -30,7 +30,7 @@ for i = 1 : num_scores;
     diff_class{i,1} = temp;
 end
 
-%selecting 2 images for testing and rest for training
+% Select two images for testing and rest for training
 num_iter = 80;
 test_names = cell(num_iter,num_scores);
 train_names = cell(num_iter,num_scores);
@@ -54,7 +54,7 @@ for i = 1 : num_iter
     
 end
 
-%standardize features
+% Standardize features
 tr = cell(1,num_scores);
 te = cell(1,num_scores);
 
@@ -68,7 +68,7 @@ for i = 1 : num_iter
     temppl = [];
     for j = 1 : size(tr,2)
         img_name = tr(1, j);
-        [rr cc] = find(filenames == img_name);
+        [rr, ~] = find(filenames == img_name);
         tempp = [tempp; feature(rr,:)];
         temppl = [temppl;labels(rr,:)];
     end
@@ -81,7 +81,7 @@ for i = 1 : num_iter
     temptel = [];
     for j = 1 : size(te,2)
         img_name = te(1, j);
-        [rr cc] = find(filenames == img_name);
+        [rr, ~] = find(filenames == img_name);
         tempt = [tempt; feature(rr,:)];
         temptel = [temptel; labels(rr,:)];
     end
@@ -117,6 +117,7 @@ cce_classification = cell(1,num_iter);
 
 predicted_labels_regression = cell(1,num_iter);
 cce_regression = cell(1,num_iter);
+true_labels = cell(1, num_iter);
 
 for i = 1 : num_iter
     [pred_labels_classification, cce_out_classification] = svm_classification(libsvm_path, training_labels{1,i}, std_train{1,i}, testing_labels{1,i}, std_test{1,i});
@@ -126,6 +127,7 @@ for i = 1 : num_iter
     [pred_labels_regression, cce_out_regression] = svm_regression(libsvm_path, training_labels{1,i}, std_train{1,i}, testing_labels{1,i}, std_test{1,i});
     cce_regression{1,i} = cce_out_regression;
     predicted_labels_regression{1,i} = pred_labels_regression;
+    true_labels = testing_labels{1, i};
 end
 
 end

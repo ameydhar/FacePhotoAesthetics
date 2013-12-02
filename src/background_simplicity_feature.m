@@ -4,7 +4,7 @@ function [simplicity_feat] = background_simplicity_feature(img, boxes)
 
 [row, column, ~] = size(img);
 
-%Find image histogram for the foreground region
+% Find image histogram for the foreground region
 num_faces = size(boxes,2);
 ss = 0;
 

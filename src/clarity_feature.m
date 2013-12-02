@@ -29,6 +29,7 @@ denum = count/area_originalimg;
 
 count1 = 0;
 area_foreground = 0;
+
 % Find area of high frequency components in foreground
 for i = 1 : size(boxes,2)
     pos = boxes{1,i};
