@@ -1,4 +1,6 @@
 function [output_regression] = demo(img_path)
+% Test the system on images using our pre-computed features
+
 % By Amey Dharwadker
 % Last modified: 1 Dec 2013
 

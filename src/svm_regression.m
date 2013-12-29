@@ -4,16 +4,10 @@ function [predicted_labels, res] = svm_regression(libsvm_path, train_labels, std
 
 addpath(libsvm_path);
 
-num_test = size(std_test,1);
-
 mod = svmtrain(train_labels, std_train, '-s 3 -t 2');
-[predicted_labels, ~, ~] = svmpredict(test_labels, std_test, mod);
 
-ss = 0;
-for i = 1:num_test
-    ss = ss + ((predicted_labels(i, 1) - train_labels(i, 1))*(predicted_labels(i, 1) - train_labels(i, 1)));
-end
+[predicted_labels, mean_err, ~] = svmpredict(test_labels, std_test, mod);
 
-res = (1/(num_test - 1))*ss;
+res = mean_err(2, 1);
 
 end
